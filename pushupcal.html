@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push-Up Strength Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+    <h1 class="text-center text-2xl font-bold mb-6">USFD Push-Up Strength Calculator</h1>
+
+    <!-- Form -->
+    <div>
+      <label class="block mb-2 font-semibold">Straight Arm Push-Up Load (PUL) (kg)</label>
+      <input id="straight-arm-load" type="number" class="w-full p-2 border rounded-md" placeholder="Enter kg" />
+
+      <label class="block mt-4 mb-2 font-semibold">Bent Arm/Plank Push-Up Load (PUL) (kg)</label>
+      <input id="bent-arm-load" type="number" class="w-full p-2 border rounded-md" placeholder="Enter kg" />
+
+      <label class="block mt-4 mb-2 font-semibold">Push-Up Performance (Repetitions)</label>
+      <input id="reps" type="number" class="w-full p-2 border rounded-md" placeholder="Enter repetitions" />
+
+      <button onclick="calculate1RM()" class="w-full bg-blue-500 text-white font-bold py-2 mt-6 rounded-md hover:bg-blue-600">
+        Calculate 1RM
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div id="results" class="mt-6 hidden">
+      <p class="text-lg font-semibold">Average PUL: <span id="average-pul"></span> kg</p>
+      <p class="text-lg font-semibold">1RM (Estimated): <span id="estimated-1rm"></span> kg</p>
+    </div>
+
+    <p class="text-center text-sm text-gray-500 mt-6">Developed by Oliver Napila Gomez<br>Copyright 2024 by USFD Philippines</p>
+  </div>
+
+  <script>
+    function calculate1RM() {
+      const straightArmLoad = parseFloat(document.getElementById('straight-arm-load').value);
+      const bentArmLoad = parseFloat(document.getElementById('bent-arm-load').value);
+      const reps = parseInt(document.getElementById('reps').value);
+
+      if (isNaN(straightArmLoad) || isNaN(bentArmLoad) || isNaN(reps)) {
+        alert("Please enter valid numbers for all fields.");
+        return;
+      }
+
+      // Calculate Average PUL
+      const averagePUL = (straightArmLoad + bentArmLoad) / 2;
+
+      // Calculate 1RM using Epley formula
+      const oneRM = averagePUL * (1 + reps / 30);
+
+      // Display results
+      document.getElementById('average-pul').textContent = averagePUL.toFixed(2);
+      document.getElementById('estimated-1rm').textContent = oneRM.toFixed(2);
+      document.getElementById('results').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
